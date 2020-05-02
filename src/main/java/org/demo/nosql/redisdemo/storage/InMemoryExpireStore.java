@@ -19,10 +19,10 @@ import java.util.function.Function;
  */
 public class InMemoryExpireStore implements Store {
 
-    public static final int FIVE_MINUTES_IN_MILLISECONDS = 5 * 60 * 1000;
-    public Map<DataKey, DataValue> keyValuesMap = new ConcurrentHashMap<>();
-    public Map<DataKey, Long> expireAtMap = new ConcurrentHashMap<>();
-    ReadWriteLock lock = new ReentrantReadWriteLock();
+    private static final int FIVE_MINUTES_IN_MILLISECONDS = 5 * 60 * 1000;
+    private Map<DataKey, DataValue> keyValuesMap = new ConcurrentHashMap<>();
+    private Map<DataKey, Long> expireAtMap = new ConcurrentHashMap<>();
+    private ReadWriteLock lock = new ReentrantReadWriteLock();
     private int checkExpiryInMillis = FIVE_MINUTES_IN_MILLISECONDS;
     private Thread worker;
     private AtomicBoolean runningFlag = new AtomicBoolean(false);

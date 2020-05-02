@@ -4,9 +4,9 @@ import org.demo.nosql.redisdemo.domain.DataKey;
 import org.demo.nosql.redisdemo.domain.DataValue;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -20,8 +20,8 @@ import java.util.function.Function;
 public class InMemoryExpireStore implements Store {
 
     public static final int FIVE_MINUTES_IN_MILLISECONDS = 5 * 60 * 1000;
-    public Map<DataKey, DataValue> keyValuesMap = new HashMap<>();
-    public Map<DataKey, Long> expireAtMap = new HashMap<>();
+    public Map<DataKey, DataValue> keyValuesMap = new ConcurrentHashMap<>();
+    public Map<DataKey, Long> expireAtMap = new ConcurrentHashMap<>();
     ReadWriteLock lock = new ReentrantReadWriteLock();
     private int checkExpiryInMillis = FIVE_MINUTES_IN_MILLISECONDS;
     private Thread worker;

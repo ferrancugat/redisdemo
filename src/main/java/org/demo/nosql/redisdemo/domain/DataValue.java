@@ -6,6 +6,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.demo.nosql.redisdemo.domain.DataValueType.SORTEDSET;
+import static org.demo.nosql.redisdemo.domain.DataValueType.STRING;
+
 public class DataValue {
 
     private final DataValueType type;
@@ -14,42 +17,6 @@ public class DataValue {
     public DataValue(DataValueType type, Object value) {
         this.type = type;
         this.value = value;
-    }
-
-    //static method factory
-    public static DataValue stringType(String value) {
-        return new DataValue(DataValueType.STRING, value);
-    }
-
-    public static DataValue stringType(int value) {
-        return stringType(value + "");
-    }
-
-    public static DataValue stringType(Long value) {
-        return stringType(value + "");
-    }
-
-    public static DataValue emptySortedSet() {
-        return new DataValue(DataValueType.SORTEDSET, new ScoringSortedSet());
-    }
-
-    /**
-     *
-     * @deprecated
-     */
-    @Deprecated
-    public static DataValue emptyLinkedMap() {
-        return new DataValue(DataValueType.SORTEDSET, new LinkedHashMap<>());
-    }
-
-    /**
-     *
-     * @deprecated
-     */
-    @Deprecated
-    public static DataValue sortedMap(Map<String, Double> sortedMap) {
-        return new DataValue(DataValueType.SORTEDSET, sortedMap);
-
     }
 
     public DataValueType getType() {
@@ -71,5 +38,42 @@ public class DataValue {
     @Override
     public int hashCode() {
         return Objects.hash(getType(), getValue());
+    }
+
+    public static DataValue emptySortedSet() {
+        return new DataValue(SORTEDSET, new ScoringSortedSet());
+    }
+
+    //static method factory
+
+    public static DataValue stringDataValue(String value) {
+        return new DataValue(STRING, value);
+    }
+
+    public static DataValue stringDataValue(int value) {
+        return stringDataValue(value + "");
+    }
+
+    public static DataValue stringDataValue(Long value) {
+        return stringDataValue(value + "");
+    }
+
+    /**
+     *
+     * @deprecated
+     */
+    @Deprecated
+    public static DataValue emptyLinkedMap() {
+        return new DataValue(SORTEDSET, new LinkedHashMap<>());
+    }
+
+    /**
+     *
+     * @deprecated
+     */
+    @Deprecated
+    public static DataValue sortedMap(Map<String, Double> sortedMap) {
+        return new DataValue(SORTEDSET, sortedMap);
+
     }
 }

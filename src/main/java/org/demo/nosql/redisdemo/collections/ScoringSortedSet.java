@@ -1,6 +1,6 @@
 package org.demo.nosql.redisdemo.collections;
 
-import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class ScoringSortedSet implements SortedSet<Map.Entry<Double, String>> {
 
     private final Map<String, Double> userScoresMap = new HashMap<>();
 
-    private final SortedSet<Map.Entry<Double, String>> scoreUsersSet = new TreeSet<>((o1, o2) -> {
+    private final Comparator<Map.Entry<Double, String>> comparatorNaturalOrderScoreAndKey = (o1, o2) -> {
         int key = o1.getKey()
                 .compareTo(o2.getKey());   // Natural order from low to high
         if (key != 0) {
@@ -26,11 +26,12 @@ public class ScoringSortedSet implements SortedSet<Map.Entry<Double, String>> {
         }
         return o1.getValue()
                 .compareTo(o2.getValue());   //Lexicographical order is used for elements with equal score.
-    });
+    };
+    private final SortedSet<Map.Entry<Double, String>> scoreUsersSet = new TreeSet<>(comparatorNaturalOrderScoreAndKey);
 
     @Override
     public Comparator<? super Map.Entry<Double, String>> comparator() {
-        return scoreUsersSet.comparator();
+        return comparatorNaturalOrderScoreAndKey;
     }
 
     @Override
@@ -103,7 +104,7 @@ public class ScoringSortedSet implements SortedSet<Map.Entry<Double, String>> {
     public boolean remove(Object userKey) {
         if (userScoresMap.containsKey(userKey)) {
             double score = userScoresMap.remove(userKey);
-            scoreUsersSet.remove(new AbstractMap.SimpleEntry<>(score, userKey));
+            scoreUsersSet.remove(new SimpleEntry<>(score, userKey));
             return true;
         }
         return false;

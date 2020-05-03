@@ -40,7 +40,7 @@ public class ZaddRedisOperation_nlogn extends AbstractRedisOperation {
                 Map<String, Double> sortedMap = sortMapByScore(map);
                 db.put(key, DataValue.sortedMap(sortedMap));
 
-                return new RedisResponse(RESPONSE_OK, DataValue.stringType(newRecords));
+                return new RedisResponse(RESPONSE_OK, DataValue.stringDataValue(newRecords));
 
             }
         } catch (NumberFormatException e) {

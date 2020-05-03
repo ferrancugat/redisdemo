@@ -20,7 +20,7 @@ public class SetexRedisOperationTest extends BaseOperationTest {
     @Override
     public void setup() {
         super.setup();
-        this.store.put(DataKey.createDataKey(key), DataValue.stringType(expectedValue));
+        this.store.put(DataKey.createDataKey(key), DataValue.stringDataValue(expectedValue));
     }
 
     @Test

@@ -38,9 +38,9 @@ public class IncrRedisOperation extends AbstractRedisOperation {
 
     private DataValue increment(DataValue oldValue) {
         if (oldValue == null) {
-            return DataValue.stringType("0");
+            return DataValue.stringDataValue("0");
         }
         Long previousCounter = Long.valueOf(oldValue.getValue());
-        return DataValue.stringType(previousCounter + 1);
+        return DataValue.stringDataValue(previousCounter + 1);
     }
 }

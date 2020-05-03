@@ -27,7 +27,7 @@ public class SetExRedisOperation extends AbstractRedisOperation {
     @Override
     protected RedisResponse execute(Store db, List<String> params) {
         Long timeToExpire = convertToMilliseconds(params.get(1));
-        db.put(DataKey.createDataKey(params.get(0), timeToExpire), DataValue.stringType(params.get(2)));
+        db.put(DataKey.createDataKey(params.get(0), timeToExpire), DataValue.stringDataValue(params.get(2)));
         return new RedisResponse(RESPONSE_OK);
     }
 

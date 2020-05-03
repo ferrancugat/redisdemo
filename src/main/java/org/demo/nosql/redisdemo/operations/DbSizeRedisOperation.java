@@ -25,6 +25,6 @@ public class DbSizeRedisOperation extends AbstractRedisOperation {
     @Override
     protected RedisResponse execute(Store db, List<String> params) {
         int size = db.size();
-        return new RedisResponse(RESPONSE_OK, DataValue.stringType(size));
+        return new RedisResponse(RESPONSE_OK, DataValue.stringDataValue(size));
     }
 }

@@ -31,7 +31,7 @@ public class ZcardRedisOperation extends AbstractRedisOperation {
         DataValue dbValue = db.get(key);
         if (SORTEDSET.equals(dbValue.getType())) {
             ScoringSortedSet dbSortedSet = dbValue.getValue();
-            return new RedisResponse(RESPONSE_OK, DataValue.stringType(dbSortedSet.size()));
+            return new RedisResponse(RESPONSE_OK, DataValue.stringDataValue(dbSortedSet.size()));
         }
         return new RedisResponse(RedisResponse.RESPONSE_ERROR);
     }

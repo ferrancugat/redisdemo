@@ -25,7 +25,7 @@ public class SetRedisOperation extends AbstractRedisOperation {
 
     @Override
     protected RedisResponse execute(Store db, List<String> params) {
-        db.put(DataKey.createDataKey(params.get(0)), DataValue.stringType(params.get(1)));
+        db.put(DataKey.createDataKey(params.get(0)), DataValue.stringDataValue(params.get(1)));
         return new RedisResponse(RESPONSE_OK);
     }
 

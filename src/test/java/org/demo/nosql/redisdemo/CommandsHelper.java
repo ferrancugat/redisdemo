@@ -30,16 +30,16 @@ public class CommandsHelper {
     }
 
     public static RedisRequest dbsize() {
-        RedisRequest request = new RedisRequest(Commands.DBSIZE_COMMAND,null);
+        RedisRequest request = new RedisRequest(Commands.DBSIZE_COMMAND, null);
         return request;
     }
 
     public static RedisRequest incr(String key) {
-        RedisRequest request = new RedisRequest(Commands.INCR_COMMAND,Arrays.asList(key));
+        RedisRequest request = new RedisRequest(Commands.INCR_COMMAND, Arrays.asList(key));
         return request;
     }
 
-    public static RedisRequest zadd(String key, String ... userScores) {
+    public static RedisRequest zadd(String key, String... userScores) {
         List<String> params = (new ArrayList(Arrays.asList(key)));
         params.addAll(Arrays.asList(userScores));
         RedisRequest request = new RedisRequest(Commands.ZADD_COMMAND, params);
@@ -47,20 +47,20 @@ public class CommandsHelper {
     }
 
     public static RedisRequest zcard(String key) {
-        RedisRequest request = new RedisRequest(Commands.ZCARD_COMMAND,Arrays.asList(key));
+        RedisRequest request = new RedisRequest(Commands.ZCARD_COMMAND, Arrays.asList(key));
         return request;
     }
 
     public static RedisRequest zrank(String key) {
-        RedisRequest request = new RedisRequest(Commands.ZRANK_COMMAND,Arrays.asList(key));
+        RedisRequest request = new RedisRequest(Commands.ZRANK_COMMAND, Arrays.asList(key));
         return request;
     }
 
     public static RedisRequest zrange(String key, int start, int stop) {
         List<String> params = new ArrayList<>();
         params.add(key);
-        params.add(start+"");
-        params.add(stop+"");
+        params.add(start + "");
+        params.add(stop + "");
         RedisRequest request = new RedisRequest(Commands.ZRANGE_COMMAND, params);
         return request;
     }

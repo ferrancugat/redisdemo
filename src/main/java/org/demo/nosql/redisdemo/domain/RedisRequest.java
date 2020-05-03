@@ -19,4 +19,9 @@ public class RedisRequest {
     public List<String> getParams() {
         return params;
     }
+
+    @Override
+    public String toString() {
+        return "RedisRequest{" + "command='" + command + '\'' + ", params=" + params + '}';
+    }
 }

@@ -1,6 +1,5 @@
 package org.demo.nosql.redisdemo.collections;
 
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -11,14 +10,16 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javafx.util.Pair;
+
 /**
  *
  */
-public class ScoringSortedSet implements SortedSet<Map.Entry<Double, String>> {
+public class ScoringSortedSet implements SortedSet<Pair<Double, String>> {
 
     private final Map<String, Double> userScoresMap = new HashMap<>();
 
-    private final Comparator<Map.Entry<Double, String>> comparatorNaturalOrderScoreAndKey = (o1, o2) -> {
+    private final Comparator<Pair<Double, String>> comparatorNaturalOrderScoreAndKey = (o1, o2) -> {
         int key = o1.getKey()
                 .compareTo(o2.getKey());   // Natural order from low to high
         if (key != 0) {
@@ -27,36 +28,35 @@ public class ScoringSortedSet implements SortedSet<Map.Entry<Double, String>> {
         return o1.getValue()
                 .compareTo(o2.getValue());   //Lexicographical order is used for elements with equal score.
     };
-    private final SortedSet<Map.Entry<Double, String>> scoreUsersSet = new TreeSet<>(comparatorNaturalOrderScoreAndKey);
+    private final SortedSet<Pair<Double, String>> scoreUsersSet = new TreeSet<>(comparatorNaturalOrderScoreAndKey);
 
     @Override
-    public Comparator<? super Map.Entry<Double, String>> comparator() {
+    public Comparator<? super Pair<Double, String>> comparator() {
         return comparatorNaturalOrderScoreAndKey;
     }
 
     @Override
-    public SortedSet<Map.Entry<Double, String>> subSet(Map.Entry<Double, String> fromElement,
-                                                       Map.Entry<Double, String> toElement) {
+    public SortedSet<Pair<Double, String>> subSet(Pair<Double, String> fromElement, Pair<Double, String> toElement) {
         return scoreUsersSet.subSet(fromElement, toElement);
     }
 
     @Override
-    public SortedSet<Map.Entry<Double, String>> headSet(Map.Entry<Double, String> toElement) {
+    public SortedSet<Pair<Double, String>> headSet(Pair<Double, String> toElement) {
         return scoreUsersSet.headSet(toElement);
     }
 
     @Override
-    public SortedSet<Map.Entry<Double, String>> tailSet(Map.Entry<Double, String> fromElement) {
+    public SortedSet<Pair<Double, String>> tailSet(Pair<Double, String> fromElement) {
         return scoreUsersSet.tailSet(fromElement);
     }
 
     @Override
-    public Map.Entry<Double, String> first() {
+    public Pair<Double, String> first() {
         return scoreUsersSet.first();
     }
 
     @Override
-    public Map.Entry<Double, String> last() {
+    public Pair<Double, String> last() {
         return scoreUsersSet.last();
     }
 
@@ -76,7 +76,7 @@ public class ScoringSortedSet implements SortedSet<Map.Entry<Double, String>> {
     }
 
     @Override
-    public Iterator<Map.Entry<Double, String>> iterator() {
+    public Iterator<Pair<Double, String>> iterator() {
         return scoreUsersSet.iterator();
     }
 
@@ -91,7 +91,7 @@ public class ScoringSortedSet implements SortedSet<Map.Entry<Double, String>> {
     }
 
     @Override
-    public boolean add(Map.Entry<Double, String> scoreUser) {
+    public boolean add(Pair<Double, String> scoreUser) {
         if (!userScoresMap.containsKey(scoreUser.getValue())) {
             userScoresMap.put(scoreUser.getValue(), scoreUser.getKey());
             scoreUsersSet.add(scoreUser);
@@ -103,8 +103,8 @@ public class ScoringSortedSet implements SortedSet<Map.Entry<Double, String>> {
     @Override
     public boolean remove(Object userKey) {
         if (userScoresMap.containsKey(userKey)) {
-            double score = userScoresMap.remove(userKey);
-            scoreUsersSet.remove(new SimpleEntry<>(score, userKey));
+            Double score = userScoresMap.remove(userKey);
+            scoreUsersSet.remove(new Pair<Double, String>(score, (String) userKey));
             return true;
         }
         return false;
@@ -120,9 +120,9 @@ public class ScoringSortedSet implements SortedSet<Map.Entry<Double, String>> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends Map.Entry<Double, String>> c) {
+    public boolean addAll(Collection<? extends Pair<Double, String>> c) {
         boolean result = false;
-        for (Map.Entry<Double, String> entry : c) {
+        for (Pair<Double, String> entry : c) {
             result |= add(entry);
         }
         return result;

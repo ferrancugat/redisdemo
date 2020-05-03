@@ -31,9 +31,9 @@ public class IncrRedisOperation extends AbstractRedisOperation {
         if ((value != null) && !isValidLong(value)) {
             return new RedisResponse(RedisResponse.RESPONSE_ERROR);
         }
-        DataValue newValue=increment(value);
-        db.put(key,newValue);
-        return new RedisResponse(RESPONSE_OK,newValue);
+        DataValue newValue = increment(value);
+        db.put(key, newValue);
+        return new RedisResponse(RESPONSE_OK, newValue);
     }
 
     private DataValue increment(DataValue oldValue) {

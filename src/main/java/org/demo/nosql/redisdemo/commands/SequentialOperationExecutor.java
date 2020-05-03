@@ -29,6 +29,8 @@ public class SequentialOperationExecutor implements OperationExecutor {
                 return future.get();
             } catch (InterruptedException | ExecutionException e) {
                 System.out.println("Interrupted exception from command executor");
+                Thread.currentThread()
+                        .interrupt();
             }
         } else {
             System.out.println("Command Id: " + request.getCommand() + " does not exist");

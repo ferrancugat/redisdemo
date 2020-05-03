@@ -24,4 +24,9 @@ public class RedisResponse {
     public DataValue getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return "RedisResponse{" + "code='" + code + '\'' + ", value=" + value + '}';
+    }
 }

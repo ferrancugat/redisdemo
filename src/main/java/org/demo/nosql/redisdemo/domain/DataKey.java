@@ -52,4 +52,9 @@ public class DataKey {
     public int hashCode() {
         return Objects.hash(getValue());
     }
+
+    @Override
+    public String toString() {
+        return "DataKey{" + "value='" + value + '\'' + ", dateExpirationInMillis=" + dateExpirationInMillis + '}';
+    }
 }

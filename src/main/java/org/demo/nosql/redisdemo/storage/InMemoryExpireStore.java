@@ -366,8 +366,7 @@ public class InMemoryExpireStore implements Store {
      * Test 20 random keys from the set of keys with an associated expire. Delete all the keys found expired. If more
      * than 25% of keys were expired, start again from step 1.
      * </p>
-     * Current simplified implemenation checks all entries to be
-     * evaluated
+     * Current simplified implemenation checks all entries to be evaluated
      */
     private class CleanerCheck extends Thread {
         @Override
@@ -379,7 +378,7 @@ public class InMemoryExpireStore implements Store {
                     Thread.sleep(checkExpiryInMillis);
                 } catch (InterruptedException e) {
                     System.out.println("Interrupted clean thread from DB");
-                } catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("Exception cleaning up expired keys");
                 }
             }

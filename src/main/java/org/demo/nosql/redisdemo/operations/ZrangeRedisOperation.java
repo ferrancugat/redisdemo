@@ -10,7 +10,8 @@ import org.demo.nosql.redisdemo.storage.Store;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+
+import javafx.util.Pair;
 
 import static org.demo.nosql.redisdemo.domain.DataValueType.SORTEDSET;
 import static org.demo.nosql.redisdemo.domain.RedisResponse.RESPONSE_OK;
@@ -51,7 +52,7 @@ public class ZrangeRedisOperation extends AbstractRedisOperation {
     private List<String> getSubsetRankingUsers(ScoringSortedSet dbSortedSet, int start, int stop) {
         List<String> rankingUsers = new LinkedList<>();
         int index = 0;
-        for (Map.Entry<Double, String> scoreUser : dbSortedSet) {
+        for (Pair<Double, String> scoreUser : dbSortedSet) {
             if (start <= index && index <= stop) {
                 rankingUsers.add(scoreUser.getValue());
             }

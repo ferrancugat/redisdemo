@@ -13,14 +13,14 @@ public class ZcardOperationTest extends BaseOperationTest {
     public static final String EXPECTED_CARDINALITY = "5";
 
     @Test
-    public void whenZcardInsertsOK_usersSortedByScoring(){
+    public void whenZcardInsertsOK_usersSortedByScoring() {
 
-        RedisRequest zaddRequest = CommandsHelper.zadd("key","71.4","user1","51.5","user2");
+        RedisRequest zaddRequest = CommandsHelper.zadd("key", "71.4", "user1", "51.5", "user2");
         operationExecutor.execute(zaddRequest);
-        zaddRequest = CommandsHelper.zadd("key","1","user7","39","user8","99.5","user10");
+        zaddRequest = CommandsHelper.zadd("key", "1", "user7", "39", "user8", "99.5", "user10");
         operationExecutor.execute(zaddRequest);
         RedisRequest zcard = CommandsHelper.zcard("key");
-        RedisResponse response =operationExecutor.execute(zcard);
+        RedisResponse response = operationExecutor.execute(zcard);
         validateZcardResponse(response, EXPECTED_CARDINALITY);
     }
 

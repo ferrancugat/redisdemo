@@ -13,17 +13,17 @@ import java.util.List;
 
 public class ZrankOperationTest extends BaseOperationTest {
 
-    private final List<String> EXPECTED_RANKING = Arrays.asList("user7","user8","user2","user1","user10");
+    private final List<String> EXPECTED_RANKING = Arrays.asList("user7", "user8", "user2", "user1", "user10");
 
     @Test
-    public void whenZrankInsertsOK_usersSortedByScoring(){
+    public void whenZrankInsertsOK_usersSortedByScoring() {
 
-        RedisRequest zaddRequest = CommandsHelper.zadd("key","71.4","user1","51.5","user2");
+        RedisRequest zaddRequest = CommandsHelper.zadd("key", "71.4", "user1", "51.5", "user2");
         operationExecutor.execute(zaddRequest);
-        zaddRequest = CommandsHelper.zadd("key","1","user7","39","user8","99.5","user10");
+        zaddRequest = CommandsHelper.zadd("key", "1", "user7", "39", "user8", "99.5", "user10");
         operationExecutor.execute(zaddRequest);
         RedisRequest zrank = CommandsHelper.zrank("key");
-        RedisResponse response =operationExecutor.execute(zrank);
+        RedisResponse response = operationExecutor.execute(zrank);
         validateZrankResponse(response, EXPECTED_RANKING);
     }
 

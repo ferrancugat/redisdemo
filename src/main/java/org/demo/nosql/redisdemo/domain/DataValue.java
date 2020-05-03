@@ -19,6 +19,41 @@ public class DataValue {
         this.value = value;
     }
 
+    public static DataValue emptySortedSet() {
+        return new DataValue(SORTEDSET, new ScoringSortedSet());
+    }
+
+    public static DataValue stringDataValue(String value) {
+        return new DataValue(STRING, value);
+    }
+
+    public static DataValue stringDataValue(int value) {
+        return stringDataValue(value + "");
+    }
+
+    public static DataValue stringDataValue(Long value) {
+        return stringDataValue(value + "");
+    }
+
+    /**
+     * @deprecated
+     */
+    @Deprecated
+    public static DataValue emptyLinkedMap() {
+        return new DataValue(SORTEDSET, new LinkedHashMap<>());
+    }
+
+    //static method factory
+
+    /**
+     * @deprecated
+     */
+    @Deprecated
+    public static DataValue sortedMap(Map<String, Double> sortedMap) {
+        return new DataValue(SORTEDSET, sortedMap);
+
+    }
+
     public DataValueType getType() {
         return type;
     }
@@ -40,40 +75,8 @@ public class DataValue {
         return Objects.hash(getType(), getValue());
     }
 
-    public static DataValue emptySortedSet() {
-        return new DataValue(SORTEDSET, new ScoringSortedSet());
-    }
-
-    //static method factory
-
-    public static DataValue stringDataValue(String value) {
-        return new DataValue(STRING, value);
-    }
-
-    public static DataValue stringDataValue(int value) {
-        return stringDataValue(value + "");
-    }
-
-    public static DataValue stringDataValue(Long value) {
-        return stringDataValue(value + "");
-    }
-
-    /**
-     *
-     * @deprecated
-     */
-    @Deprecated
-    public static DataValue emptyLinkedMap() {
-        return new DataValue(SORTEDSET, new LinkedHashMap<>());
-    }
-
-    /**
-     *
-     * @deprecated
-     */
-    @Deprecated
-    public static DataValue sortedMap(Map<String, Double> sortedMap) {
-        return new DataValue(SORTEDSET, sortedMap);
-
+    @Override
+    public String toString() {
+        return "DataValue{" + "type=" + type + ", value=" + value + '}';
     }
 }

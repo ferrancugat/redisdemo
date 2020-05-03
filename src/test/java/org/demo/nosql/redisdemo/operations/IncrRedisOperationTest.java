@@ -34,6 +34,6 @@ public class IncrRedisOperationTest extends BaseOperationTest {
         Assert.assertEquals(RedisResponse.RESPONSE_OK, response.getCode());
         DataValue dataValue = response.getValue();
         Assert.assertEquals(DataValueType.STRING, dataValue.getType());
-        Assert.assertEquals(counter+"", dataValue.getValue());
+        Assert.assertEquals(counter + "", dataValue.getValue());
     }
 }

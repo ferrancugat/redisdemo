@@ -7,8 +7,9 @@ import org.demo.nosql.redisdemo.domain.DataValue;
 import org.demo.nosql.redisdemo.domain.RedisResponse;
 import org.demo.nosql.redisdemo.storage.Store;
 
-import java.util.AbstractMap;
 import java.util.List;
+
+import javafx.util.Pair;
 
 import static org.demo.nosql.redisdemo.domain.DataValueType.SORTEDSET;
 import static org.demo.nosql.redisdemo.domain.RedisResponse.RESPONSE_OK;
@@ -44,7 +45,7 @@ public class ZaddRedisOperation extends AbstractRedisOperation {
     }
 
 
-    private int mergeScores(List<String> params, ScoringSortedSet dbSortedSet) throws NumberFormatException {
+    private int mergeScores(List<String> params, ScoringSortedSet dbSortedSet) {
         int newEntries = 0;
         for (int index = 0; index < params.size(); index += 2) {
             String scoreInput = params.get(index);
@@ -57,7 +58,7 @@ public class ZaddRedisOperation extends AbstractRedisOperation {
             } else {
                 newEntries++;
             }
-            dbSortedSet.add(new AbstractMap.SimpleEntry<>(score, userInput));       //O(log n)
+            dbSortedSet.add(new Pair(score, userInput));       //O(log n)
         }
         return newEntries;
     }

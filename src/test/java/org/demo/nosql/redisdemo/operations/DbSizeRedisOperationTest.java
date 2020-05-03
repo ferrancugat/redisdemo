@@ -17,9 +17,9 @@ public class DbSizeRedisOperationTest extends BaseOperationTest {
     @Test
     public void whenDbSizeOK_ThenReturnTotalKeys() {
 
-        insertData(key+1,expectedValue+1);
-        insertData(key+2,expectedValue+2);
-        insertData(key+3,expectedValue+3);
+        insertData(key + 1, expectedValue + 1);
+        insertData(key + 2, expectedValue + 2);
+        insertData(key + 3, expectedValue + 3);
 
         RedisRequest request = CommandsHelper.dbsize();
         RedisResponse response = operationExecutor.execute(request);
@@ -32,7 +32,7 @@ public class DbSizeRedisOperationTest extends BaseOperationTest {
 
     }
 
-    private void insertData(String key, String value){
+    private void insertData(String key, String value) {
         RedisRequest request = CommandsHelper.set(key, value);
         RedisResponse response = operationExecutor.execute(request);
 

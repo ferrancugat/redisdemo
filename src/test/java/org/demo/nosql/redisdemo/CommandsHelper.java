@@ -1,6 +1,6 @@
 package org.demo.nosql.redisdemo;
 
-import org.demo.nosql.redisdemo.commands.Commands;
+import org.demo.nosql.redisdemo.command.Commands;
 import org.demo.nosql.redisdemo.domain.RedisRequest;
 
 import java.util.ArrayList;

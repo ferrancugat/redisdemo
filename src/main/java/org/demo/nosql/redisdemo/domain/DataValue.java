@@ -1,6 +1,6 @@
 package org.demo.nosql.redisdemo.domain;
 
-import org.demo.nosql.redisdemo.collections.ScoringSortedSet;
+import org.demo.nosql.redisdemo.collection.ScoringSortedSet;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

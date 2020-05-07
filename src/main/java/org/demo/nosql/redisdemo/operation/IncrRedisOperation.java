@@ -29,6 +29,7 @@ public class IncrRedisOperation extends AbstractRedisOperation {
         DataKey key = new DataKey(params.get(0));
         DataValue value = db.get(key);
         if ((value != null) && !isValidLong(value)) {
+            logger.error("DB value: {} is not numeric", value);
             return new RedisResponse(RedisResponse.RESPONSE_ERROR);
         }
         DataValue newValue = increment(value);

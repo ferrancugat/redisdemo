@@ -37,9 +37,11 @@ public class ZaddRedisOperation extends AbstractRedisOperation {
                 int newRecords = mergeScores(params.subList(1, params.size()), dbSortedSet);
                 db.put(key, dbValue);
                 return new RedisResponse(RESPONSE_OK, DataValue.stringDataValue(newRecords));
+            } else {
+                logger.warn("Value of key:{} is of type:{}", key, dbValue.getType());
             }
         } catch (NumberFormatException e) {
-            System.out.println(" Error formatting Score to Double");
+            logger.info("Error coverting to numeric", e);
         }
         return new RedisResponse(RedisResponse.RESPONSE_ERROR);
     }

@@ -11,6 +11,8 @@ import org.demo.nosql.redisdemo.operation.ZaddRedisOperation;
 import org.demo.nosql.redisdemo.operation.ZcardRedisOperation;
 import org.demo.nosql.redisdemo.operation.ZrangeRedisOperation;
 import org.demo.nosql.redisdemo.operation.ZrankRedisOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,6 +30,7 @@ public class Commands {
     public static final String ZRANK_COMMAND = "ZRANK";
     public static final String ZRANGE_COMMAND = "ZRANGE";
     private static final Map<String, RedisOperation> COMMANDS_SUITE = new ConcurrentHashMap<>();
+    private static Logger logger = LoggerFactory.getLogger(Commands.class);
 
     static {
         COMMANDS_SUITE.put(GET_COMMAND, new GetRedisOperation());
@@ -46,6 +49,7 @@ public class Commands {
     }
 
     public static final RedisOperation getOperationByCommand(String command) {
+        logger.debug("Operation : {} requested", command);
         return COMMANDS_SUITE.get(command.toUpperCase());
     }
 

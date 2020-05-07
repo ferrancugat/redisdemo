@@ -4,6 +4,8 @@ import org.demo.nosql.redisdemo.domain.RedisRequest;
 import org.demo.nosql.redisdemo.domain.RedisResponse;
 import org.demo.nosql.redisdemo.operation.RedisOperation;
 import org.demo.nosql.redisdemo.storage.Store;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -11,6 +13,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class SequentialOperationExecutor implements OperationExecutor {
+
+    private static Logger logger = LoggerFactory.getLogger(SequentialOperationExecutor.class);
 
     private Store database;
 
@@ -24,16 +28,17 @@ public class SequentialOperationExecutor implements OperationExecutor {
     public RedisResponse execute(RedisRequest request) {
         RedisOperation operation = Commands.getOperationByCommand(request.getCommand());
         if (operation != null) {
+            logger.debug("Summitting the following request: {}", request);
             Future<RedisResponse> future = executorService.submit(() -> operation.execute(database, request));
             try {
                 return future.get();
             } catch (InterruptedException | ExecutionException e) {
-                System.out.println("Interrupted exception from command executor");
+                logger.error("Interrupted exception from command executor");
                 Thread.currentThread()
                         .interrupt();
             }
         } else {
-            System.out.println("Command Id: " + request.getCommand() + " does not exist");
+            logger.warn("Command Id: {} does not exist", request.getCommand());
         }
         return new RedisResponse(RedisResponse.RESPONSE_ERROR);
     }

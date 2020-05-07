@@ -43,8 +43,10 @@ public class ZrangeRedisOperation extends AbstractRedisOperation {
                 List<String> rankUsers = getSubsetRankingUsers(dbSortedSet, start, stop);
                 return new RedisResponse(RESPONSE_OK, new DataValue(DataValueType.LIST, rankUsers));
             } else {
-                System.out.println("The range seems to be wrong");
+                logger.warn("The range [{},{}] seems to be wrong", start, stop);
             }
+        } else {
+            logger.warn("Value of key:{} is of type:{}", key, dbValue.getType());
         }
         return new RedisResponse(RedisResponse.RESPONSE_ERROR);
     }

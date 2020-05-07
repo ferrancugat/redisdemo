@@ -3,12 +3,15 @@ package org.demo.nosql.redisdemo.operation;
 import org.demo.nosql.redisdemo.domain.RedisRequest;
 import org.demo.nosql.redisdemo.domain.RedisResponse;
 import org.demo.nosql.redisdemo.storage.Store;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public abstract class AbstractRedisOperation implements RedisOperation {
 
     protected final String command;
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     public AbstractRedisOperation(String name) {
         this.command = name;
@@ -16,8 +19,10 @@ public abstract class AbstractRedisOperation implements RedisOperation {
 
     @Override
     public RedisResponse execute(Store db, RedisRequest request) {
+        logger.debug("Operation of {} requested by: {}", command, request);
         boolean isValid = validate(request);
         if (!isValid) {
+            logger.error("Validation error with request: {}", request);
             return new RedisResponse(RedisResponse.RESPONSE_ERROR);
         }
         return this.execute(db, request.getParams());

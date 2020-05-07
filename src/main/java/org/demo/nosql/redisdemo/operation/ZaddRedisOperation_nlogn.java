@@ -44,7 +44,7 @@ public class ZaddRedisOperation_nlogn extends AbstractRedisOperation {
 
             }
         } catch (NumberFormatException e) {
-            System.out.println(" Error formatting Score to Double");
+            logger.info("Error coverting to numeric", e);
         }
         return new RedisResponse(RedisResponse.RESPONSE_ERROR);
     }

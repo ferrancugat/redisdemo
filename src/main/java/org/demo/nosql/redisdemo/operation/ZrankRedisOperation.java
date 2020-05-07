@@ -35,6 +35,8 @@ public class ZrankRedisOperation extends AbstractRedisOperation {
             ScoringSortedSet dbSortedSet = dbValue.getValue();
             List<String> rankUsers = getRankingUsers(dbSortedSet);
             return new RedisResponse(RESPONSE_OK, new DataValue(DataValueType.LIST, rankUsers));
+        } else {
+            logger.warn("Value of key:{} is of type:{}", key, dbValue.getType());
         }
         return new RedisResponse(RedisResponse.RESPONSE_ERROR);
     }

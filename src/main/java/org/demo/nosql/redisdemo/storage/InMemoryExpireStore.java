@@ -2,6 +2,8 @@ package org.demo.nosql.redisdemo.storage;
 
 import org.demo.nosql.redisdemo.domain.DataKey;
 import org.demo.nosql.redisdemo.domain.DataValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Map;
@@ -20,6 +22,7 @@ import java.util.function.Function;
 public class InMemoryExpireStore implements Store {
 
     private static final int FIVE_MINUTES_IN_MILLISECONDS = 5 * 60 * 1000;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private Map<DataKey, DataValue> keyValuesMap = new ConcurrentHashMap<>();
     private Map<DataKey, Long> expireAtMap = new ConcurrentHashMap<>();
     private ReadWriteLock lock = new ReentrantReadWriteLock();
@@ -371,25 +374,29 @@ public class InMemoryExpireStore implements Store {
     private class CleanerCheck extends Thread {
         @Override
         public void run() {
-            System.out.println("Starting clean thread of DB");
+            logger.info("Starting clean thread of DB");
             while (runningFlag.get()) {
                 try {
                     cleanMap();
                     Thread.sleep(checkExpiryInMillis);
                 } catch (InterruptedException e) {
-                    System.out.println("Interrupted clean thread from DB");
+                    logger.warn("Interrupted clean thread from DB");
+                    // Restore interrupted state...      
+                    Thread.currentThread()
+                            .interrupt();
                 } catch (Exception e) {
-                    System.out.println("Exception cleaning up expired keys");
+                    logger.info("Exception cleaning up expired keys");
                 }
             }
-            System.out.println("Stopped clean thread ");
+            logger.info("Stopped clean thread ");
         }
 
         private void cleanMap() {
+            logger.info("Starting Validation of expired keys clean thread of DB");
             for (DataKey key : expireAtMap.keySet()) {
                 if (key.isExpired()) {
                     remove(key);
-                    System.out.println("Removing key : " + key);
+                    logger.debug("Removing expired key : {} ", key);
                 }
             }
         }

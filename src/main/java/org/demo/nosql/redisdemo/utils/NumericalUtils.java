@@ -2,8 +2,12 @@ package org.demo.nosql.redisdemo.utils;
 
 import org.demo.nosql.redisdemo.domain.DataValue;
 import org.demo.nosql.redisdemo.domain.DataValueType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NumericalUtils {
+
+    private static Logger logger = LoggerFactory.getLogger(NumericalUtils.class);
 
     private NumericalUtils() {
     }
@@ -17,7 +21,7 @@ public class NumericalUtils {
                     isNumeric = true;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("The string: " + value.getValue() + " is not a valid number");
+                logger.error("The string: " + value.getValue() + " is not a valid number", e);
             }
         }
         return isNumeric;

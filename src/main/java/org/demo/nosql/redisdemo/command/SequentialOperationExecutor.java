@@ -26,7 +26,7 @@ public class SequentialOperationExecutor implements OperationExecutor {
     }
 
     public RedisResponse execute(RedisRequest request) {
-        RedisOperation operation = Commands.getOperationByCommand(request.getCommand());
+        RedisOperation operation = CommandStrategyFactory.getOperationByCommand(request.getCommand());
         if (operation != null) {
             logger.debug("Summitting the following request: {}", request);
             Future<RedisResponse> future = executorService.submit(() -> operation.execute(database, request));

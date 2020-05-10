@@ -12,6 +12,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_ERROR;
+
 public class SequentialOperationExecutor implements OperationExecutor {
 
     private static Logger logger = LoggerFactory.getLogger(SequentialOperationExecutor.class);
@@ -28,18 +30,20 @@ public class SequentialOperationExecutor implements OperationExecutor {
     public RedisResponse execute(RedisRequest request) {
         RedisOperation operation = CommandStrategyFactory.getOperationByCommand(request.getCommand());
         if (operation != null) {
-            logger.debug("Summitting the following request: {}", request);
+            logger.debug("Submitting the following request: {}", request);
             Future<RedisResponse> future = executorService.submit(() -> operation.execute(database, request));
             try {
                 return future.get();
-            } catch (InterruptedException | ExecutionException e) {
-                logger.error("Interrupted exception from command executor");
+            } catch (InterruptedException e) {
+                logger.error("Interrupted exception from command executor",e);
                 Thread.currentThread()
                         .interrupt();
+            } catch (ExecutionException e) {
+                logger.error("Unexpected exception executing command ",e);
             }
         } else {
             logger.warn("Command Id: {} does not exist", request.getCommand());
         }
-        return new RedisResponse(RedisResponse.RESPONSE_ERROR);
+        return new RedisResponse(RESPONSE_ERROR);
     }
 }

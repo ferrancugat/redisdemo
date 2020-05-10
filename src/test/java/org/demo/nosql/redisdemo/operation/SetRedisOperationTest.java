@@ -8,6 +8,8 @@ import org.demo.nosql.redisdemo.domain.RedisResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_OK;
+
 public class SetRedisOperationTest extends BaseOperationTest {
 
     String key = "key";
@@ -21,7 +23,7 @@ public class SetRedisOperationTest extends BaseOperationTest {
         RedisResponse response = operationExecutor.execute(request);
 
         Assert.assertNotNull(response);
-        Assert.assertEquals(RedisResponse.RESPONSE_OK, response.getCode());
+        Assert.assertEquals(RESPONSE_OK, response.getCode());
         DataValue dataValue = response.getValue();
         Assert.assertNull(dataValue);
 

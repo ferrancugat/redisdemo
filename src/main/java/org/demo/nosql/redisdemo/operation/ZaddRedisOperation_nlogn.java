@@ -12,7 +12,8 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.toMap;
 import static org.demo.nosql.redisdemo.domain.DataValueType.SORTEDSET;
-import static org.demo.nosql.redisdemo.domain.RedisResponse.RESPONSE_OK;
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_ERROR;
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_OK;
 
 @Deprecated
 public class ZaddRedisOperation_nlogn extends AbstractRedisOperation {
@@ -46,7 +47,7 @@ public class ZaddRedisOperation_nlogn extends AbstractRedisOperation {
         } catch (NumberFormatException e) {
             logger.info("Error coverting to numeric", e);
         }
-        return new RedisResponse(RedisResponse.RESPONSE_ERROR);
+        return new RedisResponse(RESPONSE_ERROR);
     }
 
     private Map<String, Double> sortMapByScore(Map<String, Double> map) {

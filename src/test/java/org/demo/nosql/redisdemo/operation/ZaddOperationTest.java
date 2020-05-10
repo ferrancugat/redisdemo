@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import javafx.util.Pair;
 
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_OK;
+
 public class ZaddOperationTest extends BaseOperationTest {
 
     @Test
@@ -41,7 +43,7 @@ public class ZaddOperationTest extends BaseOperationTest {
 
     private void validateZaddResponse(RedisResponse response, String expectedValue) {
         Assert.assertNotNull(response);
-        Assert.assertEquals(RedisResponse.RESPONSE_OK, response.getCode());
+        Assert.assertEquals(RESPONSE_OK, response.getCode());
         DataValue dataValue = response.getValue();
         Assert.assertEquals(DataValueType.STRING, dataValue.getType());
         Assert.assertEquals(expectedValue, dataValue.getValue());
@@ -61,7 +63,7 @@ public class ZaddOperationTest extends BaseOperationTest {
 
     private void validateZaddTypeFromGet(RedisResponse response, int expectedSize) {
         Assert.assertNotNull(response);
-        Assert.assertEquals(RedisResponse.RESPONSE_OK, response.getCode());
+        Assert.assertEquals(RESPONSE_OK, response.getCode());
         DataValue dataValue = response.getValue();
         Assert.assertEquals(DataValueType.SORTEDSET, dataValue.getType());
         ScoringSortedSet sortedSet = dataValue.getValue();

@@ -8,6 +8,8 @@ import org.demo.nosql.redisdemo.domain.RedisResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_OK;
+
 public class DeleteRedisOperationTest extends BaseOperationTest {
 
     String key = "key";
@@ -22,12 +24,12 @@ public class DeleteRedisOperationTest extends BaseOperationTest {
 
         RedisRequest delete = CommandsHelper.delete(key);
         RedisResponse response = operationExecutor.execute(delete);
-        Assert.assertEquals(RedisResponse.RESPONSE_OK, response.getCode());
+        Assert.assertEquals(RESPONSE_OK, response.getCode());
         Assert.assertNull(response.getValue());
 
         RedisRequest get = CommandsHelper.get(key);
         response = operationExecutor.execute(get);
-        Assert.assertEquals(RedisResponse.RESPONSE_OK, response.getCode());
+        Assert.assertEquals(RESPONSE_OK, response.getCode());
         Assert.assertNull(response.getValue());
 
     }
@@ -41,7 +43,7 @@ public class DeleteRedisOperationTest extends BaseOperationTest {
         String wrongkey = "wrongkey";
         RedisRequest delete = CommandsHelper.delete(wrongkey);
         RedisResponse response = operationExecutor.execute(delete);
-        Assert.assertEquals(RedisResponse.RESPONSE_OK, response.getCode());
+        Assert.assertEquals(RESPONSE_OK, response.getCode());
         Assert.assertNull(response.getValue());
 
         RedisRequest get = CommandsHelper.get(key);

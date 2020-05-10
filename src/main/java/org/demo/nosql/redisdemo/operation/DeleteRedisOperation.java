@@ -7,7 +7,7 @@ import org.demo.nosql.redisdemo.storage.Store;
 
 import java.util.List;
 
-import static org.demo.nosql.redisdemo.domain.RedisResponse.RESPONSE_OK;
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_OK;
 
 public class DeleteRedisOperation extends AbstractRedisOperation {
 

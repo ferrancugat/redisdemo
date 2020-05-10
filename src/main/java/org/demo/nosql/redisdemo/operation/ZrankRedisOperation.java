@@ -12,7 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.demo.nosql.redisdemo.domain.DataValueType.SORTEDSET;
-import static org.demo.nosql.redisdemo.domain.RedisResponse.RESPONSE_OK;
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_OK;
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_UNSUPORTED_TYPE;
 
 public class ZrankRedisOperation extends AbstractRedisOperation {
 
@@ -38,7 +39,7 @@ public class ZrankRedisOperation extends AbstractRedisOperation {
         } else {
             logger.warn("Value of key:{} is of type:{}", key, dbValue.getType());
         }
-        return new RedisResponse(RedisResponse.RESPONSE_ERROR);
+        return new RedisResponse(RESPONSE_UNSUPORTED_TYPE);
     }
 
     private List<String> getRankingUsers(ScoringSortedSet dbSortedSet) {

@@ -8,7 +8,8 @@ import org.demo.nosql.redisdemo.storage.Store;
 import java.util.List;
 
 import static org.demo.nosql.redisdemo.command.Commands.INCR_COMMAND;
-import static org.demo.nosql.redisdemo.domain.RedisResponse.RESPONSE_OK;
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_ERROR;
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_OK;
 import static org.demo.nosql.redisdemo.utils.NumericalUtils.isValidLong;
 
 public class IncrRedisOperation extends AbstractRedisOperation {
@@ -30,7 +31,7 @@ public class IncrRedisOperation extends AbstractRedisOperation {
         DataValue value = db.get(key);
         if ((value != null) && !isValidLong(value)) {
             logger.error("DB value: {} is not numeric", value);
-            return new RedisResponse(RedisResponse.RESPONSE_ERROR);
+            return new RedisResponse(RESPONSE_ERROR);
         }
         DataValue newValue = increment(value);
         db.put(key, newValue);

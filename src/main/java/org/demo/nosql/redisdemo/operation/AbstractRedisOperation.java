@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_VALIDATION;
+
 public abstract class AbstractRedisOperation implements RedisOperation {
 
     protected final String command;
@@ -23,7 +25,7 @@ public abstract class AbstractRedisOperation implements RedisOperation {
         boolean isValid = validate(request);
         if (!isValid) {
             logger.error("Validation error with request: {}", request);
-            return new RedisResponse(RedisResponse.RESPONSE_ERROR);
+            return new RedisResponse(RESPONSE_VALIDATION);
         }
         return this.execute(db, request.getParams());
     }

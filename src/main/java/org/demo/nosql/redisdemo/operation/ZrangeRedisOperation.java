@@ -14,7 +14,9 @@ import java.util.List;
 import javafx.util.Pair;
 
 import static org.demo.nosql.redisdemo.domain.DataValueType.SORTEDSET;
-import static org.demo.nosql.redisdemo.domain.RedisResponse.RESPONSE_OK;
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_OK;
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_UNSUPORTED_TYPE;
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_VALIDATION;
 
 public class ZrangeRedisOperation extends AbstractRedisOperation {
 
@@ -44,11 +46,12 @@ public class ZrangeRedisOperation extends AbstractRedisOperation {
                 return new RedisResponse(RESPONSE_OK, new DataValue(DataValueType.LIST, rankUsers));
             } else {
                 logger.warn("The range [{},{}] seems to be wrong", start, stop);
+                return new RedisResponse(RESPONSE_VALIDATION);
             }
         } else {
             logger.warn("Value of key:{} is of type:{}", key, dbValue.getType());
+            return new RedisResponse(RESPONSE_UNSUPORTED_TYPE);
         }
-        return new RedisResponse(RedisResponse.RESPONSE_ERROR);
     }
 
     private List<String> getSubsetRankingUsers(ScoringSortedSet dbSortedSet, int start, int stop) {

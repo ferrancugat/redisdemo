@@ -8,6 +8,8 @@ import org.demo.nosql.redisdemo.domain.RedisResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_OK;
+
 public class ZcardOperationTest extends BaseOperationTest {
 
     public static final String EXPECTED_CARDINALITY = "5";
@@ -26,7 +28,7 @@ public class ZcardOperationTest extends BaseOperationTest {
 
     private void validateZcardResponse(RedisResponse response, String expectedCardinality) {
         Assert.assertNotNull(response);
-        Assert.assertEquals(RedisResponse.RESPONSE_OK, response.getCode());
+        Assert.assertEquals(RESPONSE_OK, response.getCode());
         DataValue dataValue = response.getValue();
         Assert.assertEquals(DataValueType.STRING, dataValue.getType());
         Assert.assertEquals(expectedCardinality, dataValue.getValue());

@@ -10,6 +10,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_OK;
+
 public class GetRedisOperationTest extends BaseOperationTest {
 
     String key = "key";
@@ -31,7 +33,7 @@ public class GetRedisOperationTest extends BaseOperationTest {
         RedisResponse response = operationExecutor.execute(request);
 
         Assert.assertNotNull(response);
-        Assert.assertEquals(RedisResponse.RESPONSE_OK, response.getCode());
+        Assert.assertEquals(RESPONSE_OK, response.getCode());
         DataValue dataValue = response.getValue();
         Assert.assertEquals(DataValueType.STRING, dataValue.getType());
         Assert.assertEquals(expectedValue, dataValue.getValue());
@@ -45,7 +47,7 @@ public class GetRedisOperationTest extends BaseOperationTest {
         RedisResponse response = operationExecutor.execute(request);
 
         Assert.assertNotNull(response);
-        Assert.assertEquals(RedisResponse.RESPONSE_OK, response.getCode());
+        Assert.assertEquals(RESPONSE_OK, response.getCode());
         DataValue dataValue = response.getValue();
         Assert.assertNull(dataValue);
     }

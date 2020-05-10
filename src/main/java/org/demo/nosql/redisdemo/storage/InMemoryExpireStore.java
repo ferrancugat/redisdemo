@@ -377,15 +377,16 @@ public class InMemoryExpireStore implements Store {
             logger.info("Starting clean thread of DB");
             while (runningFlag.get()) {
                 try {
-                    cleanMap();
                     Thread.sleep(checkExpiryInMillis);
+                    cleanMap();
                 } catch (InterruptedException e) {
-                    logger.warn("Interrupted clean thread from DB");
+                    logger.warn("Interrupted clean thread from DB",e);
                     // Restore interrupted state...      
                     Thread.currentThread()
                             .interrupt();
-                } catch (Exception e) {
-                    logger.info("Exception cleaning up expired keys");
+                    runningFlag.set(false);
+                } catch (RuntimeException e) {
+                    logger.info("Exception cleaning up expired keys",e);
                 }
             }
             logger.info("Stopped clean thread ");

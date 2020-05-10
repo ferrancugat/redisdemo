@@ -12,7 +12,8 @@ import java.util.List;
 import javafx.util.Pair;
 
 import static org.demo.nosql.redisdemo.domain.DataValueType.SORTEDSET;
-import static org.demo.nosql.redisdemo.domain.RedisResponse.RESPONSE_OK;
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_OK;
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_UNSUPORTED_TYPE;
 
 public class ZaddRedisOperation extends AbstractRedisOperation {
 
@@ -43,7 +44,7 @@ public class ZaddRedisOperation extends AbstractRedisOperation {
         } catch (NumberFormatException e) {
             logger.info("Error coverting to numeric", e);
         }
-        return new RedisResponse(RedisResponse.RESPONSE_ERROR);
+        return new RedisResponse(RESPONSE_UNSUPORTED_TYPE);
     }
 
 

@@ -2,7 +2,6 @@ package org.demo.nosql.redisdemo.operation;
 
 import org.demo.nosql.redisdemo.CommandsHelper;
 import org.demo.nosql.redisdemo.domain.DataValue;
-import org.demo.nosql.redisdemo.domain.DataValueType;
 import org.demo.nosql.redisdemo.domain.RedisRequest;
 import org.demo.nosql.redisdemo.domain.RedisResponse;
 import org.junit.Assert;
@@ -10,6 +9,9 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static org.demo.nosql.redisdemo.domain.DataValueType.LIST;
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_OK;
 
 public class ZrankOperationTest extends BaseOperationTest {
 
@@ -29,9 +31,9 @@ public class ZrankOperationTest extends BaseOperationTest {
 
     private void validateZrankResponse(RedisResponse response, List<String> ranking) {
         Assert.assertNotNull(response);
-        Assert.assertEquals(RedisResponse.RESPONSE_OK, response.getCode());
+        Assert.assertEquals(RESPONSE_OK, response.getCode());
         DataValue dataValue = response.getValue();
-        Assert.assertEquals(DataValueType.LIST, dataValue.getType());
+        Assert.assertEquals(LIST, dataValue.getType());
         Assert.assertTrue(ranking.equals(dataValue.getValue()));
     }
 

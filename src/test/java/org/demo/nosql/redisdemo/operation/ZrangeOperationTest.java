@@ -11,6 +11,8 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.demo.nosql.redisdemo.domain.RedisResponseCode.RESPONSE_OK;
+
 public class ZrangeOperationTest extends BaseOperationTest {
 
     private final List<String> EXPECTED_RANKING = Arrays.asList("user7", "user8");
@@ -29,7 +31,7 @@ public class ZrangeOperationTest extends BaseOperationTest {
 
     private void validateZrangeResponse(RedisResponse response, List<String> ranking) {
         Assert.assertNotNull(response);
-        Assert.assertEquals(RedisResponse.RESPONSE_OK, response.getCode());
+        Assert.assertEquals(RESPONSE_OK, response.getCode());
         DataValue dataValue = response.getValue();
         Assert.assertEquals(DataValueType.LIST, dataValue.getType());
         Assert.assertTrue(ranking.equals(dataValue.getValue()));
